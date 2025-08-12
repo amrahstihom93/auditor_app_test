@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useMemo } from "react";
@@ -26,7 +27,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { users as initialUsers, getCurrentUser } from "@/lib/data";
+import { getUsers, getCurrentUser } from "@/lib/data";
 import { PlusCircle, MoreHorizontal, Search } from "lucide-react";
 import type { UserRole, User, UserStatus } from "@/lib/types";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from "@/components/ui/dialog";
@@ -70,7 +71,7 @@ const getStatusBadgeClass = (status: UserStatus) => {
 
 
 export default function UsersPage() {
-  const [userList, setUserList] = useState<User[]>(initialUsers);
+  const [userList, setUserList] = useState<User[]>(() => getUsers());
   const [isInviteDialogOpen, setIsInviteDialogOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const { toast } = useToast();

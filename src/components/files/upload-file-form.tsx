@@ -21,7 +21,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { addFile, audits } from "@/lib/data";
+import { addFile, getAudits } from "@/lib/data";
 import type { ManagedFile } from "@/lib/types";
 
 const formSchema = z.object({
@@ -44,6 +44,7 @@ const getFileExtension = (fileName: string): "pdf" | "docx" | "xlsx" => {
 }
 
 export function UploadFileForm({ onFileUploaded }: UploadFileFormProps) {
+  const audits = getAudits();
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {

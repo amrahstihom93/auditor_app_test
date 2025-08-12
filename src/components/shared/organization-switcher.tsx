@@ -19,7 +19,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { organizations, getCurrentOrganization } from "@/lib/data";
+import { getOrganizations, getCurrentOrganization } from "@/lib/data";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 type PopoverTriggerProps = React.ComponentPropsWithoutRef<
@@ -33,6 +33,7 @@ export function OrganizationSwitcher({ className }: OrganizationSwitcherProps) {
   const [selectedOrganization, setSelectedOrganization] = React.useState(
     getCurrentOrganization()
   );
+  const organizations = getOrganizations();
 
   return (
     <Popover open={open} onOpenChange={setOpen}>

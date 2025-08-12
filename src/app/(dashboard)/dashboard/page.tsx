@@ -1,5 +1,8 @@
+
+"use client";
+
 import { PageHeader } from "@/components/shared/page-header";
-import { audits, users, groups } from "@/lib/data";
+import { getAudits } from "@/lib/data";
 import { StatsCard } from "@/components/dashboard/stats-card";
 import { AuditStatusChart } from "@/components/dashboard/audit-status-chart";
 import { RecentAudits } from "@/components/dashboard/recent-audits";
@@ -9,9 +12,9 @@ import {
   ClipboardList,
   Activity,
 } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function DashboardPage() {
+  const audits = getAudits();
   const totalAudits = audits.length;
   const passedAudits = audits.filter(
     (audit) => audit.status === "Passed"

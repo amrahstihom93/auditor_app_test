@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -22,7 +23,7 @@ import {
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from "@/components/ui/dialog";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { files as initialFiles, getAudit, deleteFile, addFile } from "@/lib/data";
+import { getFiles, getAudit, deleteFile, addFile } from "@/lib/data";
 import type { ManagedFile } from "@/lib/types";
 import { FileUp, File, FileText, FileSpreadsheet, MoreHorizontal } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
@@ -42,7 +43,7 @@ const getFileIcon = (type: string) => {
 }
 
 export default function FilesPage() {
-  const [fileList, setFileList] = useState<ManagedFile[]>(initialFiles);
+  const [fileList, setFileList] = useState<ManagedFile[]>(() => getFiles());
   const [isUploadDialogOpen, setIsUploadDialogOpen] = useState(false);
   const { toast } = useToast();
 

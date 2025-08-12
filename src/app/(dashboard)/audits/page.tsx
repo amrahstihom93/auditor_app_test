@@ -1,3 +1,6 @@
+
+"use client";
+
 import { PageHeader } from "@/components/shared/page-header";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,7 +13,7 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { audits, getGroup, getUser } from "@/lib/data";
+import { getAudits, getGroup, getUser } from "@/lib/data";
 import { PlusCircle } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
@@ -28,6 +31,8 @@ const getStatusVariant = (status: AuditStatus) => {
 }
 
 export default function AuditsPage() {
+  const audits = getAudits();
+
   return (
     <div>
       <PageHeader

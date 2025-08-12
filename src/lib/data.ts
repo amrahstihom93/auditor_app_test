@@ -1,12 +1,14 @@
+
 import type { Organization, User, Audit, Group, ManagedFile, AuditTemplate, UserStatus } from './types';
 
-export const organizations: Organization[] = [
+// In-memory data store
+let organizations: Organization[] = [
   { id: 'org_1', name: 'Innovate Inc.', avatar: 'https://placehold.co/32x32.png' },
   { id: 'org_2', name: 'SecureSoft', avatar: 'https://placehold.co/32x32.png' },
   { id: 'org_3', name: 'DataCorp', avatar: 'https://placehold.co/32x32.png' },
 ];
 
-export let users: User[] = [
+let users: User[] = [
   { id: 'user_1', name: 'Alice Johnson', email: 'alice@innovate.com', avatar: 'https://placehold.co/40x40.png', role: 'Admin', status: 'Active', organizationId: 'org_1' },
   { id: 'user_2', name: 'Bob Williams', email: 'bob@securesoft.com', avatar: 'https://placehold.co/40x40.png', role: 'Auditor', status: 'Active', organizationId: 'org_2' },
   { id: 'user_3', name: 'Charlie Brown', email: 'charlie@datacorp.com', avatar: 'https://placehold.co/40x40.png', role: 'Viewer', status: 'Inactive', organizationId: 'org_3' },
@@ -14,13 +16,13 @@ export let users: User[] = [
   { id: 'user_5', name: 'Ethan Hunt', email: 'ethan@securesoft.com', avatar: 'https://placehold.co/40x40.png', role: 'Admin', status: 'Pending', organizationId: 'org_2' },
 ];
 
-export const groups: Group[] = [
+let groups: Group[] = [
     { id: 'group_1', name: 'SOC 2 Compliance', description: 'Audits related to SOC 2 Type II certification.', organizationId: 'org_1' },
     { id: 'group_2', name: 'Internal Security', description: 'Regular internal security assessments.', organizationId: 'org_1' },
     { id: 'group_3', name: 'Financial Systems', description: 'Audits for financial system integrity.', organizationId: 'org_2' },
 ];
 
-export const audits: Audit[] = [
+let audits: Audit[] = [
   { id: 'audit_1', name: 'Q1 2024 SOC 2 Audit', status: 'Passed', groupId: 'group_1', organizationId: 'org_1', date: '2024-03-15', auditorId: 'user_4', findings: 'All controls were met. No exceptions noted. Strong encryption and access control mechanisms are in place. Recommend continuous monitoring of firewall rules.' },
   { id: 'audit_2', name: 'Q2 2024 SOC 2 Audit', status: 'In Progress', groupId: 'group_1', organizationId: 'org_1', date: '2024-06-20', auditorId: 'user_4', findings: 'Audit is currently underway. Initial review of access logs shows no anomalies.' },
   { id: 'audit_3', name: 'Penetration Test', status: 'Failed', groupId: 'group_2', organizationId: 'org_1', date: '2024-05-01', auditorId: 'user_4', findings: 'Critical vulnerability found in the main web application (SQL Injection). Several medium-risk vulnerabilities related to outdated server software were also identified. Immediate remediation is required.' },
@@ -29,13 +31,13 @@ export const audits: Audit[] = [
   { id: 'audit_6', name: 'Data Center Physical Security', status: 'Passed', groupId: 'group_2', organizationId: 'org_1', date: '2024-02-28', auditorId: 'user_4', findings: 'Physical access controls are robust. Biometric scanners and surveillance systems are fully operational.' },
 ];
 
-export let files: ManagedFile[] = [
+let files: ManagedFile[] = [
     { id: 'file_1', name: 'SOC2_Report_Q1_2024.pdf', type: 'pdf', size: '2.5 MB', uploadedAt: '2024-03-20', auditId: 'audit_1', organizationId: 'org_1' },
     { id: 'file_2', name: 'pentest_results.docx', type: 'docx', size: '800 KB', uploadedAt: '2024-05-02', auditId: 'audit_3', organizationId: 'org_1' },
     { id: 'file_3', name: 'evidence_logs.xlsx', type: 'xlsx', size: '5.1 MB', uploadedAt: '2024-06-18', auditId: 'audit_2', organizationId: 'org_1' },
 ];
 
-export let templates: AuditTemplate[] = [
+let templates: AuditTemplate[] = [
     { id: 'template_1', name: 'Standard Web App Security Audit', description: 'A template for auditing typical web applications.', organizationId: 'org_1', createdBy: 'user_1', createdAt: '2024-01-10', items: [
         { id: 'item_1', text: 'Check for SQL injection vulnerabilities.' },
         { id: 'item_2', text: 'Verify Cross-Site Scripting (XSS) protection.' },
@@ -48,17 +50,70 @@ export let templates: AuditTemplate[] = [
     ]},
 ];
 
-// Helper functions to get data
-export const getAudit = (id: string) => audits.find(a => a.id === id);
-export const getUser = (id: string) => users.find(u => u.id === id);
-export const getGroup = (id: string) => groups.find(g => g.id === id);
-export const getOrganization = (id: string) => organizations.find(o => o.id === id);
-
 // For demo purposes, we'll hardcode the current user and organization
-export const getCurrentUser = () => users[0];
-export const getCurrentOrganization = () => organizations[0];
+// In a real app, this would be determined by the authentication state.
+let currentUserId = 'user_1';
+let currentOrganizationId = 'org_1';
 
-// Function to add a new template to the in-memory array
+export const getCurrentUser = (): User => {
+    return users.find(u => u.id === currentUserId)!;
+};
+
+export const getCurrentOrganization = (): Organization => {
+    return organizations.find(o => o.id === currentOrganizationId)!;
+};
+
+// --- DATA ACCESS FUNCTIONS (MULTI-TENANT AWARE) ---
+
+export const getOrganizations = (): Organization[] => {
+    // In a real multi-tenant app, you might restrict which orgs are visible.
+    // For now, we return all.
+    return organizations;
+}
+
+export const getUsers = (): User[] => {
+    const orgId = getCurrentOrganization().id;
+    return users.filter(u => u.organizationId === orgId);
+};
+
+export const getUser = (id: string): User | undefined => {
+    const orgId = getCurrentOrganization().id;
+    return users.find(u => u.id === id && u.organizationId === orgId);
+}
+
+export const getAudits = (): Audit[] => {
+    const orgId = getCurrentOrganization().id;
+    return audits.filter(a => a.organizationId === orgId);
+};
+
+export const getAudit = (id: string): Audit | undefined => {
+    const orgId = getCurrentOrganization().id;
+    return audits.find(a => a.id === id && a.organizationId === orgId);
+}
+
+export const getGroups = (): Group[] => {
+    const orgId = getCurrentOrganization().id;
+    return groups.filter(g => g.organizationId === orgId);
+}
+
+export const getGroup = (id: string): Group | undefined => {
+    const orgId = getCurrentOrganization().id;
+    return groups.find(g => g.id === id && g.organizationId === orgId);
+}
+
+export const getFiles = (): ManagedFile[] => {
+    const orgId = getCurrentOrganization().id;
+    return files.filter(f => f.organizationId === orgId);
+}
+
+export const getTemplates = (): AuditTemplate[] => {
+    const orgId = getCurrentOrganization().id;
+    return templates.filter(t => t.organizationId === orgId);
+}
+
+
+// --- DATA MUTATION FUNCTIONS ---
+
 export function addTemplate(template: Omit<AuditTemplate, 'id' | 'organizationId'>) {
     const newTemplate: AuditTemplate = {
         id: `template_${Date.now()}`,
@@ -68,17 +123,19 @@ export function addTemplate(template: Omit<AuditTemplate, 'id' | 'organizationId
     templates.unshift(newTemplate);
 }
 
-// Function to add a new user and organization
 export function addUserAndOrganization({ orgName, userName, userEmail }: { orgName: string, userName: string, userEmail: string }) {
+    const newOrgId = `org_${Date.now()}`;
+    const newUserId = `user_${Date.now()}`;
+
     const newOrg: Organization = {
-        id: `org_${Date.now()}`,
+        id: newOrgId,
         name: orgName,
         avatar: 'https://placehold.co/32x32.png',
     };
     organizations.unshift(newOrg);
 
     const newUser: User = {
-        id: `user_${Date.now()}`,
+        id: newUserId,
         name: userName,
         email: userEmail,
         avatar: 'https://placehold.co/40x40.png',
@@ -87,15 +144,18 @@ export function addUserAndOrganization({ orgName, userName, userEmail }: { orgNa
         organizationId: newOrg.id,
     };
     users.unshift(newUser);
+
+    // Switch the current session to the new user and org
+    currentUserId = newUserId;
+    currentOrganizationId = newOrgId;
 }
 
-// Function to add a user to the current organization
 export function addUserToCurrentOrg(user: Omit<User, 'id' | 'organizationId' | 'avatar' | 'status'>): User {
     const newId = `user_${Date.now()}`;
     const newUser: User = {
         id: newId,
         organizationId: getCurrentOrganization().id,
-        avatar: 'https://placehold.co/40x40.png',
+        avatar: `https://placehold.co/40x40.png?text=${user.name.charAt(0)}`,
         status: 'Pending',
         ...user,
     };
@@ -103,7 +163,6 @@ export function addUserToCurrentOrg(user: Omit<User, 'id' | 'organizationId' | '
     return newUser;
 }
 
-// Function to add a file to the in-memory array
 export function addFile(fileData: Omit<ManagedFile, 'id' | 'organizationId' | 'uploadedAt' | 'size'>): ManagedFile {
     const newFile: ManagedFile = {
         id: `file_${Date.now()}`,
@@ -116,7 +175,6 @@ export function addFile(fileData: Omit<ManagedFile, 'id' | 'organizationId' | 'u
     return newFile;
 }
 
-// Function to delete a file from the in-memory array
 export function deleteFile(fileId: string) {
     files = files.filter(f => f.id !== fileId);
 }

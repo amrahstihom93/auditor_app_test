@@ -1,3 +1,6 @@
+
+"use client";
+
 import { PageHeader } from "@/components/shared/page-header";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -7,11 +10,12 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion"
-import { templates, getUser } from "@/lib/data";
+import { getTemplates, getUser } from "@/lib/data";
 import { PlusCircle, ListChecks } from "lucide-react";
 import Link from "next/link";
 
 export default function TemplatesPage() {
+  const templates = getTemplates();
   return (
     <div>
       <PageHeader

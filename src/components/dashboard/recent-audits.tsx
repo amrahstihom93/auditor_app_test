@@ -1,3 +1,6 @@
+
+"use client";
+
 import {
   Avatar,
   AvatarFallback,
@@ -10,7 +13,7 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
-import { audits, users } from "@/lib/data";
+import { getAudits, getUsers } from "@/lib/data";
 import { Badge } from "../ui/badge";
 import { cn } from "@/lib/utils";
 import type { AuditStatus } from "@/lib/types";
@@ -28,6 +31,8 @@ const getStatusVariant = (status: AuditStatus) => {
 }
 
 export function RecentAudits() {
+  const audits = getAudits();
+  const users = getUsers();
   const recentAudits = audits.slice(0, 5);
 
   return (

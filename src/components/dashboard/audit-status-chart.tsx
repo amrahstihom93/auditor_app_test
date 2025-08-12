@@ -1,8 +1,9 @@
+
 "use client";
 
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, Tooltip, Legend } from "recharts";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { audits, groups } from "@/lib/data";
+import { getAudits, getGroups } from "@/lib/data";
 import type { AuditStatus } from "@/lib/types";
 
 const statusColors: Record<AuditStatus, string> = {
@@ -13,6 +14,8 @@ const statusColors: Record<AuditStatus, string> = {
 };
 
 export function AuditStatusChart() {
+  const audits = getAudits();
+  const groups = getGroups();
   const data = groups.map(group => {
     const groupAudits = audits.filter(audit => audit.groupId === group.id);
     const statusCounts = groupAudits.reduce((acc, audit) => {

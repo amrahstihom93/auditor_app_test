@@ -1,3 +1,6 @@
+
+"use client";
+
 import { PageHeader } from "@/components/shared/page-header";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,10 +12,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { groups } from "@/lib/data";
+import { getGroups } from "@/lib/data";
 import { PlusCircle } from "lucide-react";
 
 export default function GroupsPage() {
+  const groups = getGroups();
   return (
     <div>
       <PageHeader
