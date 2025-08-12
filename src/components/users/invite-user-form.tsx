@@ -26,7 +26,7 @@ import type { User, UserRole } from "@/lib/types";
 const formSchema = z.object({
   name: z.string().min(1, "User name is required."),
   email: z.string().email("Invalid email address."),
-  role: z.enum(["Auditor", "Viewer"], {
+  role: z.enum(["Admin", "Auditor", "Viewer"], {
     required_error: "Please select a role.",
   }),
 });
@@ -97,6 +97,7 @@ export function InviteUserForm({ onUserInvited }: InviteUserFormProps) {
                         </SelectTrigger>
                     </FormControl>
                     <SelectContent>
+                        <SelectItem value="Admin">Admin</SelectItem>
                         <SelectItem value="Auditor">Auditor</SelectItem>
                         <SelectItem value="Viewer">Viewer</SelectItem>
                     </SelectContent>
