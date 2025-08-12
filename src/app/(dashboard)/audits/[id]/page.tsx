@@ -9,7 +9,7 @@ import { AuditSummaryClient } from "@/components/audits/audit-summary-client";
 import { cn } from "@/lib/utils";
 import type { ProcessStatus, TicketStatus, TicketPriority } from "@/lib/types";
 import { Button } from "@/components/ui/button";
-import { FileTicket, PlusCircle } from "lucide-react";
+import { Ticket, PlusCircle } from "lucide-react";
 import { useState } from "react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { CreateTicketForm } from "@/components/tickets/create-ticket-form";
@@ -110,7 +110,7 @@ export default function ProcessDetailPage({ params }: { params: { id: string } }
             <CardHeader className="flex flex-row items-center justify-between">
                <div>
                  <CardTitle className="flex items-center gap-2">
-                    <FileTicket />
+                    <Ticket />
                     Process Tickets
                 </CardTitle>
                 <CardDescription>Specific findings, tasks, or issues to be addressed for this process.</CardDescription>
