@@ -11,7 +11,7 @@ const LandingNav = () => (
                 <Shield size={24} />
             </div>
             <h1 className="text-xl font-headline font-semibold">
-              AuditGo
+              AuditAce
             </h1>
         </div>
         <div className="flex items-center gap-4">
@@ -39,7 +39,7 @@ export default function LandingPage() {
                         Streamline Your Auditing Process with AI
                     </h1>
                     <p className="mt-6 text-lg text-muted-foreground">
-                        AuditGo helps you manage compliance, track findings, and generate reports effortlessly. Focus on what matters, not the paperwork.
+                        AuditAce helps you manage compliance, track findings, and generate reports effortlessly. Focus on what matters, not the paperwork.
                     </p>
                     <div className="mt-10 flex items-center justify-center gap-x-6">
                         <Button size="lg" asChild>
@@ -70,7 +70,7 @@ export default function LandingPage() {
             <section className="py-20 px-4 bg-muted/40 sm:py-32">
                 <div className="max-w-6xl mx-auto">
                     <div className="text-center">
-                        <h2 className="text-3xl font-headline font-bold sm:text-4xl">Why AuditGo?</h2>
+                        <h2 className="text-3xl font-headline font-bold sm:text-4xl">Why AuditAce?</h2>
                         <p className="mt-4 text-lg text-muted-foreground">
                             Everything you need to conduct efficient and insightful audits.
                         </p>
@@ -112,7 +112,7 @@ export default function LandingPage() {
         {/* Footer */}
         <footer className="py-10 px-4 border-t">
             <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center text-sm text-muted-foreground">
-                <p>&copy; {new Date().getFullYear()} AuditGo. All rights reserved.</p>
+                <p>&copy; {new Date().getFullYear()} AuditAce. All rights reserved.</p>
                 <div className="flex gap-6 mt-4 md:mt-0">
                     <Link href="#" className="hover:text-primary">Privacy Policy</Link>
                     <Link href="#" className="hover:text-primary">Terms of Service</Link>

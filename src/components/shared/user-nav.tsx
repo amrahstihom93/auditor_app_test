@@ -1,3 +1,8 @@
+
+"use client";
+
+import { useContext } from "react";
+import { useRouter } from "next/navigation";
 import {
   Avatar,
   AvatarFallback,
@@ -17,9 +22,23 @@ import { getCurrentUser } from "@/lib/data";
 import { OrganizationSwitcher } from "./organization-switcher";
 import { CreditCard, LogOut, Settings, User } from "lucide-react";
 import Link from "next/link";
+import { AuthContext } from "@/context/auth-context";
 
 export function UserNav() {
   const user = getCurrentUser();
+  const router = useRouter();
+  const auth = useContext(AuthContext);
+
+  if (!auth) {
+    throw new Error("AuthContext must be used within an AuthProvider");
+  }
+
+  const { logout } = auth;
+
+  const handleLogout = () => {
+    logout();
+    router.push("/login");
+  };
 
   return (
     <div className="flex items-center gap-4">
@@ -60,12 +79,10 @@ export function UserNav() {
             </Link>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
-          <Link href="/login">
-            <DropdownMenuItem>
-              <LogOut className="mr-2 h-4 w-4" />
-              <span>Log out</span>
-            </DropdownMenuItem>
-          </Link>
+          <DropdownMenuItem onClick={handleLogout}>
+            <LogOut className="mr-2 h-4 w-4" />
+            <span>Log out</span>
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

@@ -1,5 +1,6 @@
 "use client";
 
+import { useContext } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -14,14 +15,28 @@ import { Label } from "@/components/ui/label";
 import { Shield } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { AuthContext } from "@/context/auth-context";
+import { useToast } from "@/hooks/use-toast";
 
 export default function LoginPage() {
   const router = useRouter();
+  const auth = useContext(AuthContext);
+  const { toast } = useToast();
+
+  if (!auth) {
+    throw new Error("AuthContext must be used within an AuthProvider");
+  }
+
+  const { login } = auth;
 
   const handleLogin = (event: React.FormEvent) => {
     event.preventDefault();
-    // In a real app, you'd handle authentication here.
-    // For this demo, we'll just redirect to the dashboard.
+    // For this demo, we'll just log the user in and redirect.
+    login();
+    toast({
+      title: "Login Successful",
+      description: "Welcome back!",
+    });
     router.push("/dashboard");
   };
 
@@ -34,7 +49,7 @@ export default function LoginPage() {
               <Shield size={32} />
             </div>
             <CardTitle className="text-3xl font-headline">
-              Welcome to AuditGo
+              Welcome to AuditAce
             </CardTitle>
             <CardDescription>
               Enter your credentials to access your dashboard.
