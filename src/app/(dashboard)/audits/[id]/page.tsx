@@ -30,12 +30,13 @@ const getStatusVariant = (status: ProcessStatus) => {
 
 
 export default function ProcessDetailPage({ params }: { params: { id: string } }) {
+  const processId = params.id;
   const [isCreateTicketOpen, setIsCreateTicketOpen] = useState(false);
   const { toast } = useToast();
 
   // We are using a client component, so we need to fetch data and manage state here.
-  const process = getProcess(params.id);
-  const [tickets, setTickets] = useState(() => getTicketsForProcess(params.id));
+  const process = getProcess(processId);
+  const [tickets, setTickets] = useState(() => getTicketsForProcess(processId));
   
   if (!process) {
     notFound();
@@ -47,7 +48,7 @@ export default function ProcessDetailPage({ params }: { params: { id: string } }
 
   const handleTicketCreated = () => {
     // Refetch tickets when a new one is created
-    setTickets(getTicketsForProcess(params.id));
+    setTickets(getTicketsForProcess(processId));
     setIsCreateTicketOpen(false);
     toast({
         title: "Ticket Created",
