@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Shield } from "lucide-react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -58,7 +59,7 @@ export default function LoginPage() {
           <CardFooter className="flex flex-col gap-4">
             <Button className="w-full" type="submit">Sign In</Button>
             <p className="text-xs text-muted-foreground">
-                Don't have an account? <a href="#" className="text-primary underline">Contact support</a>
+                Don't have an account? <Link href="/register" className="text-primary underline">Sign Up</Link>
             </p>
           </CardFooter>
         </form>

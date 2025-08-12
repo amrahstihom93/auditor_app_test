@@ -67,3 +67,23 @@ export function addTemplate(template: Omit<AuditTemplate, 'id' | 'organizationId
     };
     templates.unshift(newTemplate);
 }
+
+// Function to add a new user and organization
+export function addUserAndOrganization({ orgName, userName, userEmail }: { orgName: string, userName: string, userEmail: string }) {
+    const newOrg: Organization = {
+        id: `org_${Date.now()}`,
+        name: orgName,
+        avatar: 'https://placehold.co/32x32.png',
+    };
+    organizations.unshift(newOrg);
+
+    const newUser: User = {
+        id: `user_${Date.now()}`,
+        name: userName,
+        email: userEmail,
+        avatar: 'https://placehold.co/32x32.png',
+        role: 'Admin', // First user in an org is always an Admin
+        organizationId: newOrg.id,
+    };
+    users.unshift(newUser);
+}
