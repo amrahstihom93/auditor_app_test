@@ -73,10 +73,10 @@ export default function LoginPage() {
           </CardContent>
           <CardFooter className="flex flex-col gap-4">
             <Button
-              className="w-full bg-background text-foreground border border-primary hover:bg-primary/10"
+              className="w-full bg-background text-foreground border border-primary hover:bg-primary hover:text-primary-foreground"
               type="submit"
             >
-              <Lock className="mr-2 h-4 w-4" /> Login
+              <Lock className="mr-2 h-4 w-4" /> Sign In
             </Button>
             <p className="text-xs text-muted-foreground">
                 Don't have an account? <Link href="/register" className="text-primary underline">Sign Up</Link>
