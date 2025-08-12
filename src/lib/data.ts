@@ -94,7 +94,7 @@ export function addUserToCurrentOrg(user: Omit<User, 'id' | 'organizationId' | '
     const newUser: User = {
         id: newId,
         organizationId: getCurrentOrganization().id,
-        avatar: `https://i.pravatar.cc/32?u=${newId}`,
+        avatar: 'https://placehold.co/32x32.png',
         ...user,
     };
     users.push(newUser);
