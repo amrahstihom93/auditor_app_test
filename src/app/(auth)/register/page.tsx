@@ -77,7 +77,7 @@ export default function RegisterPage() {
                 Create Your Account
               </CardTitle>
               <CardDescription>
-                Join AuditAce and start streamlining your compliance.
+                Join AuditGo and start streamlining your compliance.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">

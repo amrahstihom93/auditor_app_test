@@ -34,7 +34,7 @@ export default function LoginPage() {
               <Shield size={32} />
             </div>
             <CardTitle className="text-3xl font-headline">
-              Welcome to AuditAce
+              Welcome to AuditGo
             </CardTitle>
             <CardDescription>
               Enter your credentials to access your dashboard.

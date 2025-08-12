@@ -3,7 +3,7 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
-  title: "AuditAce",
+  title: "AuditGo",
   description: "Streamline Your Auditing Process with AI-Powered Insights",
 };
 

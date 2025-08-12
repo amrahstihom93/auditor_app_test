@@ -37,7 +37,7 @@ export default function DashboardLayout({
               <Shield size={24} />
             </div>
             <h1 className="text-xl font-headline font-semibold text-sidebar-foreground">
-              AuditAce
+              AuditGo
             </h1>
           </div>
         </SidebarHeader>
