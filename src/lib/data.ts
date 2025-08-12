@@ -1,4 +1,4 @@
-import type { Organization, User, Audit, Group, ManagedFile, AuditTemplate } from './types';
+import type { Organization, User, Audit, Group, ManagedFile, AuditTemplate, UserStatus } from './types';
 
 export const organizations: Organization[] = [
   { id: 'org_1', name: 'Innovate Inc.', avatar: 'https://placehold.co/32x32.png' },
@@ -7,11 +7,11 @@ export const organizations: Organization[] = [
 ];
 
 export let users: User[] = [
-  { id: 'user_1', name: 'Alice Johnson', email: 'alice@innovate.com', avatar: 'https://placehold.co/32x32.png', role: 'Admin', organizationId: 'org_1' },
-  { id: 'user_2', name: 'Bob Williams', email: 'bob@securesoft.com', avatar: 'https://placehold.co/32x32.png', role: 'Auditor', organizationId: 'org_2' },
-  { id: 'user_3', name: 'Charlie Brown', email: 'charlie@datacorp.com', avatar: 'https://placehold.co/32x32.png', role: 'Viewer', organizationId: 'org_3' },
-  { id: 'user_4', name: 'Diana Prince', email: 'diana@innovate.com', avatar: 'https://placehold.co/32x32.png', role: 'Auditor', organizationId: 'org_1' },
-  { id: 'user_5', name: 'Ethan Hunt', email: 'ethan@securesoft.com', avatar: 'https://placehold.co/32x32.png', role: 'Admin', organizationId: 'org_2' },
+  { id: 'user_1', name: 'Alice Johnson', email: 'alice@innovate.com', avatar: 'https://placehold.co/40x40.png', role: 'Admin', status: 'Active', organizationId: 'org_1' },
+  { id: 'user_2', name: 'Bob Williams', email: 'bob@securesoft.com', avatar: 'https://placehold.co/40x40.png', role: 'Auditor', status: 'Active', organizationId: 'org_2' },
+  { id: 'user_3', name: 'Charlie Brown', email: 'charlie@datacorp.com', avatar: 'https://placehold.co/40x40.png', role: 'Viewer', status: 'Inactive', organizationId: 'org_3' },
+  { id: 'user_4', name: 'Diana Prince', email: 'diana@innovate.com', avatar: 'https://placehold.co/40x40.png', role: 'Auditor', status: 'Active', organizationId: 'org_1' },
+  { id: 'user_5', name: 'Ethan Hunt', email: 'ethan@securesoft.com', avatar: 'https://placehold.co/40x40.png', role: 'Admin', status: 'Pending', organizationId: 'org_2' },
 ];
 
 export const groups: Group[] = [
@@ -81,20 +81,22 @@ export function addUserAndOrganization({ orgName, userName, userEmail }: { orgNa
         id: `user_${Date.now()}`,
         name: userName,
         email: userEmail,
-        avatar: 'https://placehold.co/32x32.png',
+        avatar: 'https://placehold.co/40x40.png',
         role: 'Admin', // First user in an org is always an Admin
+        status: 'Active',
         organizationId: newOrg.id,
     };
     users.unshift(newUser);
 }
 
 // Function to add a user to the current organization
-export function addUserToCurrentOrg(user: Omit<User, 'id' | 'organizationId' | 'avatar'>): User {
+export function addUserToCurrentOrg(user: Omit<User, 'id' | 'organizationId' | 'avatar' | 'status'>): User {
     const newId = `user_${Date.now()}`;
     const newUser: User = {
         id: newId,
         organizationId: getCurrentOrganization().id,
-        avatar: 'https://placehold.co/32x32.png',
+        avatar: 'https://placehold.co/40x40.png',
+        status: 'Pending',
         ...user,
     };
     users.push(newUser);

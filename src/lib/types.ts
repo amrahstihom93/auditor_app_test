@@ -1,4 +1,5 @@
 export type UserRole = "Admin" | "Auditor" | "Viewer";
+export type UserStatus = "Active" | "Inactive" | "Pending";
 
 export type Organization = {
   id: string;
@@ -12,6 +13,7 @@ export type User = {
   email: string;
   avatar: string;
   role: UserRole;
+  status: UserStatus;
   organizationId: string;
 };
 
