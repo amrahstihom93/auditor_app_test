@@ -48,7 +48,7 @@ export default function DashboardLayout({
           </SidebarHeader>
           <SidebarContent>
             <SidebarMenu>
-              <SidebarMenuItem>
+               <SidebarMenuItem>
                 <SidebarMenuButton
                   asChild
                   tooltip={{ children: "Dashboard", side: "right" }}
