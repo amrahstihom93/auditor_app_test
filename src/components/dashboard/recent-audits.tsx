@@ -46,7 +46,7 @@ export function RecentAudits() {
               <div key={audit.id} className="flex items-center">
                 <Avatar className="h-9 w-9">
                   <AvatarImage src={user?.avatar} alt="Avatar" data-ai-hint="person avatar" />
-                  <AvatarFallback>{user?.name.charAt(0)}</AvatarFallback>
+                  <AvatarFallback>{user?.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
                 </Avatar>
                 <div className="ml-4 space-y-1">
                   <p className="text-sm font-medium leading-none">

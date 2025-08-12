@@ -6,7 +6,7 @@ export const organizations: Organization[] = [
   { id: 'org_3', name: 'DataCorp', avatar: 'https://placehold.co/32x32.png' },
 ];
 
-export const users: User[] = [
+export let users: User[] = [
   { id: 'user_1', name: 'Alice Johnson', email: 'alice@innovate.com', avatar: 'https://placehold.co/32x32.png', role: 'Admin', organizationId: 'org_1' },
   { id: 'user_2', name: 'Bob Williams', email: 'bob@securesoft.com', avatar: 'https://placehold.co/32x32.png', role: 'Auditor', organizationId: 'org_2' },
   { id: 'user_3', name: 'Charlie Brown', email: 'charlie@datacorp.com', avatar: 'https://placehold.co/32x32.png', role: 'Viewer', organizationId: 'org_3' },
@@ -35,7 +35,7 @@ export const files: ManagedFile[] = [
     { id: 'file_3', name: 'evidence_logs.xlsx', type: 'xlsx', size: '5.1 MB', uploadedAt: '2024-06-18', auditId: 'audit_2', organizationId: 'org_1' },
 ];
 
-export const templates: AuditTemplate[] = [
+export let templates: AuditTemplate[] = [
     { id: 'template_1', name: 'Standard Web App Security Audit', description: 'A template for auditing typical web applications.', organizationId: 'org_1', createdBy: 'user_1', createdAt: '2024-01-10', items: [
         { id: 'item_1', text: 'Check for SQL injection vulnerabilities.' },
         { id: 'item_2', text: 'Verify Cross-Site Scripting (XSS) protection.' },
@@ -86,4 +86,17 @@ export function addUserAndOrganization({ orgName, userName, userEmail }: { orgNa
         organizationId: newOrg.id,
     };
     users.unshift(newUser);
+}
+
+// Function to add a user to the current organization
+export function addUserToCurrentOrg(user: Omit<User, 'id' | 'organizationId' | 'avatar'>): User {
+    const newId = `user_${Date.now()}`;
+    const newUser: User = {
+        id: newId,
+        organizationId: getCurrentOrganization().id,
+        avatar: `https://i.pravatar.cc/32?u=${newId}`,
+        ...user,
+    };
+    users.push(newUser);
+    return newUser;
 }
