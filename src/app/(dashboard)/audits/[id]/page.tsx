@@ -32,7 +32,7 @@ export default function AuditDetailPage({ params }: { params: { id: string } }) 
     <div>
       <PageHeader
         title={audit.name}
-        description={`Details for audit conducted on ${audit.date}.`}
+        description={`Details for audit conducted on ${new Date(audit.date).toLocaleDateString()}.`}
       />
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         <Card>
@@ -56,7 +56,7 @@ export default function AuditDetailPage({ params }: { params: { id: string } }) 
             </div>
             <div className="flex justify-between">
               <span className="text-muted-foreground">Date</span>
-              <span>{audit.date}</span>
+              <span>{new Date(audit.date).toLocaleDateString()}</span>
             </div>
           </CardContent>
         </Card>

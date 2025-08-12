@@ -57,3 +57,13 @@ export const getOrganization = (id: string) => organizations.find(o => o.id === 
 // For demo purposes, we'll hardcode the current user and organization
 export const getCurrentUser = () => users[0];
 export const getCurrentOrganization = () => organizations[0];
+
+// Function to add a new template to the in-memory array
+export function addTemplate(template: Omit<AuditTemplate, 'id' | 'organizationId'>) {
+    const newTemplate: AuditTemplate = {
+        id: `template_${Date.now()}`,
+        organizationId: getCurrentOrganization().id,
+        ...template
+    };
+    templates.unshift(newTemplate);
+}

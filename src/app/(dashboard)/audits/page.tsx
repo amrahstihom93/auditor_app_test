@@ -73,7 +73,7 @@ export default function AuditsPage() {
                     </TableCell>
                     <TableCell>{group?.name}</TableCell>
                     <TableCell>{auditor?.name}</TableCell>
-                    <TableCell>{audit.date}</TableCell>
+                    <TableCell>{new Date(audit.date).toLocaleDateString()}</TableCell>
                     <TableCell>
                       <Button asChild variant="ghost" size="sm">
                         <Link href={`/audits/${audit.id}`}>View</Link>

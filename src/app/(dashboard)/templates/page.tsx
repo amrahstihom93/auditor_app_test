@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/accordion"
 import { templates, getUser } from "@/lib/data";
 import { PlusCircle, ListChecks } from "lucide-react";
+import Link from "next/link";
 
 export default function TemplatesPage() {
   return (
@@ -17,9 +18,11 @@ export default function TemplatesPage() {
         title="Audit Templates"
         description="Create and manage reusable templates for your audits."
         actions={
-          <Button>
-            <PlusCircle className="mr-2 h-4 w-4" />
-            Create Template
+          <Button asChild>
+            <Link href="/templates/new">
+              <PlusCircle className="mr-2 h-4 w-4" />
+              Create Template
+            </Link>
           </Button>
         }
       />
@@ -31,7 +34,7 @@ export default function TemplatesPage() {
                     <CardHeader>
                         <CardTitle>{template.name}</CardTitle>
                         <CardDescription>{template.description}</CardDescription>
-                        <p className="text-xs text-muted-foreground">Created by {creator?.name} on {template.createdAt}</p>
+                        <p className="text-xs text-muted-foreground">Created by {creator?.name} on {new Date(template.createdAt).toLocaleDateString()}</p>
                     </CardHeader>
                     <CardContent>
                         <Accordion type="single" collapsible>

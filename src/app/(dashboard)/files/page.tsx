@@ -66,7 +66,7 @@ export default function FilesPage() {
                     </TableCell>
                     <TableCell>{audit?.name}</TableCell>
                     <TableCell>{file.size}</TableCell>
-                    <TableCell>{file.uploadedAt}</TableCell>
+                    <TableCell>{new Date(file.uploadedAt).toLocaleDateString()}</TableCell>
                   </TableRow>
                 );
               })}
