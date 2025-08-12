@@ -1,3 +1,4 @@
+
 "use client";
 
 import { getProcess, getGroup, getUser, getUsers, getTicketsForProcess } from "@/lib/data";
@@ -68,7 +69,7 @@ export default function ProcessDetailPage({ params }: { params: { id: string } }
           <CardContent className="space-y-4">
             <div className="flex justify-between">
               <span className="text-muted-foreground">Status</span>
-              <Badge variant={getStatusVariant(process.status)} className={cn(process.status === 'Passed' && 'bg-accent text-accent-foreground', 'capitalize')}>
+              <Badge variant={getStatusVariant(process.status)} className={cn(process.status === 'Passed' && 'bg-primary text-primary-foreground', 'capitalize')}>
                 {process.status}
               </Badge>
             </div>
