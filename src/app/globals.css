@@ -4,24 +4,24 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 224 71% 4%;
-    --card: 0 0% 100%;
-    --card-foreground: 224 71% 4%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 224 71% 4%;
+    --background: 224 71% 4%;
+    --foreground: 210 40% 98%;
+    --card: 224 71% 4%;
+    --card-foreground: 210 40% 98%;
+    --popover: 224 71% 4%;
+    --popover-foreground: 210 40% 98%;
     --primary: 217 91% 60%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215.4 16.3% 56.9%;
+    --accent: 145 58% 43%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
     --ring: 217 91% 60%;
     --chart-1: 217 91% 60%;
     --chart-2: 145 58% 43%;
@@ -38,6 +38,7 @@
     --sidebar-border: 217.2 32.6% 17.5%;
     --sidebar-ring: 217 89% 61%;
   }
+
   .dark {
     --background: 224 71% 4%;
     --foreground: 210 40% 98%;
@@ -51,7 +52,7 @@
     --secondary-foreground: 210 40% 98%;
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215.4 16.3% 56.9%;
-    --accent: 217.2 32.6% 17.5%;
+    --accent: 145 58% 43%;
     --accent-foreground: 210 40% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
@@ -63,6 +64,7 @@
     --chart-3: 358 75% 59%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
     --sidebar-background: 224 71% 4%;
     --sidebar-foreground: 210 40% 98%;
     --sidebar-primary: 217 89% 61%;
@@ -80,5 +82,19 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .animated-gradient {
+    animation: gradient-animation 15s ease infinite;
+    background-size: 400% 400%;
+    background-image: linear-gradient(
+      -45deg,
+      hsl(var(--primary) / 0.2),
+      hsl(var(--accent) / 0.2),
+      hsl(var(--chart-3) / 0.2),
+      hsl(var(--chart-4) / 0.2)
+    );
   }
 }
