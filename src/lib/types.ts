@@ -59,3 +59,18 @@ export type AuditTemplate = {
   createdBy: string;
   createdAt: string;
 };
+
+export type TicketStatus = "Open" | "In Progress" | "Resolved";
+export type TicketPriority = "Low" | "Medium" | "High";
+
+export type Ticket = {
+    id: string;
+    processId: string;
+    organizationId: string;
+    title: string;
+    description: string;
+    status: TicketStatus;
+    priority: TicketPriority;
+    assigneeId: string;
+    createdAt: string;
+};

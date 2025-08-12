@@ -1,5 +1,5 @@
 
-import type { Organization, User, Process, Group, ManagedFile, AuditTemplate, UserStatus } from './types';
+import type { Organization, User, Process, Group, ManagedFile, AuditTemplate, Ticket } from './types';
 
 // In-memory data store
 let organizations: Organization[] = [
@@ -29,6 +29,12 @@ let processes: Process[] = [
   { id: 'audit_4', name: 'Payment Gateway Audit', status: 'Passed', groupId: 'group_3', organizationId: 'org_2', date: '2024-04-10', auditorId: 'user_2', findings: 'Transaction processing is secure and compliant with PCI DSS standards.', processOwnerName: 'Finance Dept', processOwnerEmail: 'finance@securesoft.com' },
   { id: 'audit_5', name: 'HR System Access Control', status: 'Pending', groupId: 'group_3', organizationId: 'org_2', date: '2024-07-05', auditorId: 'user_2', findings: '', processOwnerName: 'HR Team', processOwnerEmail: 'hr@securesoft.com' },
   { id: 'audit_6', name: 'Data Center Physical Security', status: 'Passed', groupId: 'group_2', organizationId: 'org_1', date: '2024-02-28', auditorId: 'user_4', findings: 'Physical access controls are robust. Biometric scanners and surveillance systems are fully operational.', processOwnerName: 'IT Operations', processOwnerEmail: 'itops@innovate.com' },
+];
+
+let tickets: Ticket[] = [
+    { id: 'ticket_1', processId: 'audit_3', organizationId: 'org_1', title: 'Remediate SQL Injection Vulnerability', description: 'The main web application is vulnerable to SQL injection on the login page.', status: 'In Progress', priority: 'High', assigneeId: 'user_4', createdAt: '2024-05-02' },
+    { id: 'ticket_2', processId: 'audit_3', organizationId: 'org_1', title: 'Update Apache Server Version', description: 'Server is running an outdated version of Apache with known vulnerabilities.', status: 'Open', priority: 'Medium', assigneeId: 'user_4', createdAt: '2024-05-02' },
+    { id: 'ticket_3', processId: 'audit_1', organizationId: 'org_1', title: 'Review Firewall Rule #4815', description: 'Firewall rule #4815 seems overly permissive. Review and tighten if necessary.', status: 'Resolved', priority: 'Low', assigneeId: 'user_1', createdAt: '2024-03-16' },
 ];
 
 let files: ManagedFile[] = [
@@ -110,8 +116,24 @@ export const getTemplates = (): AuditTemplate[] => {
     return templates.filter(t => t.organizationId === orgId);
 }
 
+export const getTicketsForProcess = (processId: string): Ticket[] => {
+    const orgId = getCurrentOrganization().id;
+    return tickets.filter(t => t.processId === processId && t.organizationId === orgId);
+}
+
 
 // --- DATA MUTATION FUNCTIONS ---
+
+export function addTicket(ticket: Omit<Ticket, 'id' | 'organizationId' | 'createdAt'>): Ticket {
+    const newTicket: Ticket = {
+        id: `ticket_${Date.now()}`,
+        organizationId: getCurrentOrganization().id,
+        createdAt: new Date().toISOString(),
+        ...ticket
+    };
+    tickets.unshift(newTicket);
+    return newTicket;
+}
 
 export function addTemplate(template: Omit<AuditTemplate, 'id' | 'organizationId'>) {
     const newTemplate: AuditTemplate = {
