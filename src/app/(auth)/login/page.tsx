@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Shield } from "lucide-react";
+import { Shield, Lock } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { AuthContext } from "@/context/auth-context";
@@ -72,7 +72,12 @@ export default function LoginPage() {
             </div>
           </CardContent>
           <CardFooter className="flex flex-col gap-4">
-            <Button className="w-full" type="submit">Sign In</Button>
+            <Button
+              className="w-full bg-background text-foreground border border-primary hover:bg-primary/10"
+              type="submit"
+            >
+              <Lock className="mr-2 h-4 w-4" /> Login
+            </Button>
             <p className="text-xs text-muted-foreground">
                 Don't have an account? <Link href="/register" className="text-primary underline">Sign Up</Link>
             </p>
