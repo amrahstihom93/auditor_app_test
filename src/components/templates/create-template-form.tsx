@@ -13,7 +13,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -24,9 +23,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { ListChecks, Sparkles } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import type { AuditTemplate } from "@/lib/types";
 import { Skeleton } from "../ui/skeleton";
-import { getCurrentUser } from "@/lib/data";
+import { createTemplateAction } from "@/app/actions";
 
 const formSchema = z.object({
   name: z.string().min(1, "Template name is required."),
@@ -37,15 +35,12 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>;
 
-interface CreateTemplateFormProps {
-  addTemplate: (template: Omit<AuditTemplate, 'id' | 'organizationId'>) => void;
-}
-
-export function CreateTemplateForm({ addTemplate }: CreateTemplateFormProps) {
+export function CreateTemplateForm() {
   const router = useRouter();
   const { toast } = useToast();
   const [generatedItems, setGeneratedItems] = useState<OnboardingTemplateOutput>([]);
   const [isGenerating, setIsGenerating] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -83,7 +78,7 @@ export function CreateTemplateForm({ addTemplate }: CreateTemplateFormProps) {
     }
   };
 
-  const onSubmit = (values: FormValues) => {
+  const onSubmit = async (values: FormValues) => {
     if (generatedItems.length === 0) {
         toast({
             variant: "destructive",
@@ -92,23 +87,38 @@ export function CreateTemplateForm({ addTemplate }: CreateTemplateFormProps) {
         });
         return;
     }
+    
+    setIsSaving(true);
+    
+    try {
+        const result = await createTemplateAction({
+            name: values.name,
+            description: values.description,
+            items: generatedItems,
+        });
 
-    const newTemplate = {
-      name: values.name,
-      description: values.description,
-      items: generatedItems.map((item, index) => ({ id: `item_${Date.now()}_${index}`, text: item.text })),
-      createdBy: getCurrentUser().id,
-      createdAt: new Date().toISOString(),
-    };
-
-    addTemplate(newTemplate);
-
-    toast({
-      title: "Template Created",
-      description: `The "${values.name}" template has been successfully created.`,
-    });
-
-    router.push("/templates");
+        if (result.success) {
+            toast({
+              title: "Template Created",
+              description: result.message,
+            });
+            router.push("/templates");
+        } else {
+             toast({
+                variant: "destructive",
+                title: "Error Saving Template",
+                description: "An unexpected error occurred while saving.",
+            });
+        }
+    } catch (error) {
+         toast({
+            variant: "destructive",
+            title: "Error Saving Template",
+            description: "An unexpected error occurred while saving.",
+        });
+    } finally {
+        setIsSaving(false);
+    }
   };
 
   return (
@@ -226,8 +236,8 @@ export function CreateTemplateForm({ addTemplate }: CreateTemplateFormProps) {
             </Card>
           </div>
         </div>
-        <Button type="submit" size="lg" disabled={generatedItems.length === 0 || isGenerating}>
-            Save Template
+        <Button type="submit" size="lg" disabled={generatedItems.length === 0 || isGenerating || isSaving}>
+            {isSaving ? "Saving..." : "Save Template"}
         </Button>
       </form>
     </Form>
