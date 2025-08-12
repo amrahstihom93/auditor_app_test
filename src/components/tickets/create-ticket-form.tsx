@@ -149,7 +149,7 @@ export function CreateTicketForm({ processId, users, onTicketCreated }: CreateTi
                     <FormControl>
                         <SelectTrigger>
                             <SelectValue placeholder="Select a status" />
-                        </Trigger>
+                        </SelectTrigger>
                     </FormControl>
                     <SelectContent>
                         <SelectItem value="Open">Open</SelectItem>

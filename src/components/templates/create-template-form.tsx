@@ -26,6 +26,7 @@ import { ListChecks, Sparkles } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import type { AuditTemplate } from "@/lib/types";
 import { Skeleton } from "../ui/skeleton";
+import { getCurrentUser } from "@/lib/data";
 
 const formSchema = z.object({
   name: z.string().min(1, "Template name is required."),
@@ -96,7 +97,7 @@ export function CreateTemplateForm({ addTemplate }: CreateTemplateFormProps) {
       name: values.name,
       description: values.description,
       items: generatedItems.map((item, index) => ({ id: `item_${Date.now()}_${index}`, text: item.text })),
-      createdBy: 'user_1', // Hardcoded for now
+      createdBy: getCurrentUser().id,
       createdAt: new Date().toISOString(),
     };
 

@@ -1,0 +1,26 @@
+# Docker ignore file
+
+# Git
+.git
+.gitignore
+
+# Docker
+Dockerfile
+.dockerignore
+
+# Next.js build artifacts
+.next/
+
+# Node modules
+node_modules/
+
+# Development files
+README.md
+*.md
+
+# Local environment variables
+.env.local
+.env.*.local
+
+# VSCode
+.vscode
