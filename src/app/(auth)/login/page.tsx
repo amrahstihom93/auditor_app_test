@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Shield, Lock } from "lucide-react";
+import { Shield } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { AuthContext } from "@/context/auth-context";
@@ -76,7 +76,7 @@ export default function LoginPage() {
               className="w-full bg-background text-foreground border border-primary hover:bg-primary hover:text-primary-foreground"
               type="submit"
             >
-              <Lock className="mr-2 h-4 w-4" /> Sign In
+              Sign In
             </Button>
             <p className="text-xs text-muted-foreground">
                 Don't have an account? <Link href="/register" className="text-primary underline">Sign Up</Link>
