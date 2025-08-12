@@ -29,7 +29,7 @@ export const audits: Audit[] = [
   { id: 'audit_6', name: 'Data Center Physical Security', status: 'Passed', groupId: 'group_2', organizationId: 'org_1', date: '2024-02-28', auditorId: 'user_4', findings: 'Physical access controls are robust. Biometric scanners and surveillance systems are fully operational.' },
 ];
 
-export const files: ManagedFile[] = [
+export let files: ManagedFile[] = [
     { id: 'file_1', name: 'SOC2_Report_Q1_2024.pdf', type: 'pdf', size: '2.5 MB', uploadedAt: '2024-03-20', auditId: 'audit_1', organizationId: 'org_1' },
     { id: 'file_2', name: 'pentest_results.docx', type: 'docx', size: '800 KB', uploadedAt: '2024-05-02', auditId: 'audit_3', organizationId: 'org_1' },
     { id: 'file_3', name: 'evidence_logs.xlsx', type: 'xlsx', size: '5.1 MB', uploadedAt: '2024-06-18', auditId: 'audit_2', organizationId: 'org_1' },
@@ -101,4 +101,22 @@ export function addUserToCurrentOrg(user: Omit<User, 'id' | 'organizationId' | '
     };
     users.push(newUser);
     return newUser;
+}
+
+// Function to add a file to the in-memory array
+export function addFile(fileData: Omit<ManagedFile, 'id' | 'organizationId' | 'uploadedAt' | 'size'>): ManagedFile {
+    const newFile: ManagedFile = {
+        id: `file_${Date.now()}`,
+        organizationId: getCurrentOrganization().id,
+        uploadedAt: new Date().toISOString(),
+        size: `${(Math.random() * 5).toFixed(1)} MB`, // Simulate file size
+        ...fileData,
+    };
+    files.unshift(newFile);
+    return newFile;
+}
+
+// Function to delete a file from the in-memory array
+export function deleteFile(fileId: string) {
+    files = files.filter(f => f.id !== fileId);
 }
