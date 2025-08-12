@@ -4,55 +4,62 @@ import type { Organization, User, Process, Group, ManagedFile, AuditTemplate, Ti
 // In-memory data store
 let organizations: Organization[] = [
   { id: 'org_1', name: 'Innovate Inc.', avatar: 'https://placehold.co/32x32.png' },
-  { id: 'org_2', name: 'SecureSoft', avatar: 'https://placehold.co/32x32.png' },
-  { id: 'org_3', name: 'DataCorp', avatar: 'https://placehold.co/32x32.png' },
+  { id: 'org_2', name: 'CyberSafe Solutions', avatar: 'https://placehold.co/32x32.png' },
+  { id: 'org_3', name: 'HealthData Corp', avatar: 'https://placehold.co/32x32.png' },
 ];
 
 let users: User[] = [
   { id: 'user_1', name: 'Alice Johnson', email: 'alice@innovate.com', avatar: 'https://placehold.co/40x40.png', role: 'Admin', status: 'Active', organizationId: 'org_1' },
-  { id: 'user_2', name: 'Bob Williams', email: 'bob@securesoft.com', avatar: 'https://placehold.co/40x40.png', role: 'Auditor', status: 'Active', organizationId: 'org_2' },
-  { id: 'user_3', name: 'Charlie Brown', email: 'charlie@datacorp.com', avatar: 'https://placehold.co/40x40.png', role: 'Viewer', status: 'Inactive', organizationId: 'org_3' },
+  { id: 'user_2', name: 'Bob Williams', email: 'bob@cybersafe.com', avatar: 'https://placehold.co/40x40.png', role: 'Auditor', status: 'Active', organizationId: 'org_2' },
+  { id: 'user_3', name: 'Charlie Brown', email: 'charlie@healthdata.com', avatar: 'https://placehold.co/40x40.png', role: 'Viewer', status: 'Inactive', organizationId: 'org_3' },
   { id: 'user_4', name: 'Diana Prince', email: 'diana@innovate.com', avatar: 'https://placehold.co/40x40.png', role: 'Auditor', status: 'Active', organizationId: 'org_1' },
-  { id: 'user_5', name: 'Ethan Hunt', email: 'ethan@securesoft.com', avatar: 'https://placehold.co/40x40.png', role: 'Admin', status: 'Pending', organizationId: 'org_2' },
+  { id: 'user_5', name: 'Ethan Hunt', email: 'ethan@cybersafe.com', avatar: 'https://placehold.co/40x40.png', role: 'Admin', status: 'Pending', organizationId: 'org_2' },
+  { id: 'user_6', name: 'Frank Castle', email: 'frank@innovate.com', avatar: 'https://placehold.co/40x40.png', role: 'Viewer', status: 'Active', organizationId: 'org_1' },
 ];
 
 let groups: Group[] = [
-    { id: 'group_1', name: 'SOC 2 Compliance', description: 'Processes related to SOC 2 Type II certification.', organizationId: 'org_1' },
-    { id: 'group_2', name: 'Internal Security', description: 'Regular internal security assessments.', organizationId: 'org_1' },
-    { id: 'group_3', name: 'Financial Systems', description: 'Processes for financial system integrity.', organizationId: 'org_2' },
+    { id: 'group_1', name: 'SOC 2 Compliance', description: 'Audits related to SOC 2 Type II certification.', organizationId: 'org_1' },
+    { id: 'group_2', name: 'Internal Security Audits', description: 'Regular internal security assessments and controls.', organizationId: 'org_1' },
+    { id: 'group_3', name: 'ISO 27001 Controls', description: 'Audits for ISO 27001 information security standard.', organizationId: 'org_2' },
+    { id: 'group_4', name: 'HIPAA Security Rule', description: 'Audits covering ePHI protection and HIPAA compliance.', organizationId: 'org_3' },
 ];
 
 let processes: Process[] = [
-  { id: 'audit_1', name: 'Q1 2024 SOC 2', status: 'Passed', groupId: 'group_1', organizationId: 'org_1', date: '2024-03-15', auditorId: 'user_4', findings: 'All controls were met. No exceptions noted. Strong encryption and access control mechanisms are in place. Recommend continuous monitoring of firewall rules.', processOwnerName: 'Product Team', processOwnerEmail: 'product@innovate.com' },
-  { id: 'audit_2', name: 'Q2 2024 SOC 2', status: 'In Progress', groupId: 'group_1', organizationId: 'org_1', date: '2024-06-20', auditorId: 'user_4', findings: 'Process is currently underway. Initial review of access logs shows no anomalies.', processOwnerName: 'Product Team', processOwnerEmail: 'product@innovate.com' },
-  { id: 'audit_3', name: 'Penetration Test', status: 'Failed', groupId: 'group_2', organizationId: 'org_1', date: '2024-05-01', auditorId: 'user_4', findings: 'Critical vulnerability found in the main web application (SQL Injection). Several medium-risk vulnerabilities related to outdated server software were also identified. Immediate remediation is required.', processOwnerName: 'Engineering Team', processOwnerEmail: 'eng@innovate.com' },
-  { id: 'audit_4', name: 'Payment Gateway Audit', status: 'Passed', groupId: 'group_3', organizationId: 'org_2', date: '2024-04-10', auditorId: 'user_2', findings: 'Transaction processing is secure and compliant with PCI DSS standards.', processOwnerName: 'Finance Dept', processOwnerEmail: 'finance@securesoft.com' },
-  { id: 'audit_5', name: 'HR System Access Control', status: 'Pending', groupId: 'group_3', organizationId: 'org_2', date: '2024-07-05', auditorId: 'user_2', findings: '', processOwnerName: 'HR Team', processOwnerEmail: 'hr@securesoft.com' },
-  { id: 'audit_6', name: 'Data Center Physical Security', status: 'Passed', groupId: 'group_2', organizationId: 'org_1', date: '2024-02-28', auditorId: 'user_4', findings: 'Physical access controls are robust. Biometric scanners and surveillance systems are fully operational.', processOwnerName: 'IT Operations', processOwnerEmail: 'itops@innovate.com' },
+  { id: 'audit_1', name: 'Q1 2024 User Access Review', status: 'Passed', groupId: 'group_1', organizationId: 'org_1', date: '2024-03-20', auditorId: 'user_4', findings: 'Quarterly user access review completed for all critical systems. Access levels for 98% of users were appropriate for their roles. Minor recommendation to formalize the process for role change approvals.', processOwnerName: 'IT Security', processOwnerEmail: 'itsec@innovate.com' },
+  { id: 'audit_2', name: 'AWS Infrastructure Security Audit', status: 'In Progress', groupId: 'group_1', organizationId: 'org_1', date: '2024-06-25', auditorId: 'user_4', findings: 'Audit is currently in the evidence gathering phase. Initial automated scans of S3 bucket policies and IAM roles have been completed. Manual review of network ACLs is pending.', processOwnerName: 'Cloud Operations', processOwnerEmail: 'cloudops@innovate.com' },
+  { id: 'audit_3', name: 'Vendor Risk Assessment - CoreWeave', status: 'Failed', groupId: 'group_2', organizationId: 'org_1', date: '2024-05-15', auditorId: 'user_4', findings: 'The vendor CoreWeave failed to provide sufficient evidence of their data encryption at rest controls (SOC 2 Control CC7.1). Their BCP/DR plan also lacks a defined RTO. This poses a significant risk to data integrity.', processOwnerName: 'Procurement', processOwnerEmail: 'procurement@innovate.com' },
+  { id: 'audit_4', name: 'ISO 27001 Annex A.12.1.2', status: 'Passed', groupId: 'group_3', organizationId: 'org_2', date: '2024-04-18', auditorId: 'user_2', findings: 'Protection against malware controls are implemented effectively. Anti-malware software is deployed on all endpoints and is updated regularly. User awareness training on phishing is comprehensive.', processOwnerName: 'CyberDefense Team', processOwnerEmail: 'defense@cybersafe.com' },
+  { id: 'audit_5', name: 'HIPAA Contingency Plan Test', status: 'Pending', groupId: 'group_4', organizationId: 'org_3', date: '2024-07-10', auditorId: 'user_3', findings: '', processOwnerName: 'Compliance Office', processOwnerEmail: 'compliance@healthdata.com' },
+  { id: 'audit_6', name: 'Data Center Physical Security Review', status: 'Passed', groupId: 'group_2', organizationId: 'org_1', date: '2024-02-28', auditorId: 'user_4', findings: 'Physical access controls to the data center are robust. Biometric scanners, mantraps, and surveillance systems are fully operational and logs are reviewed monthly. No unauthorized access attempts were recorded.', processOwnerName: 'IT Operations', processOwnerEmail: 'itops@innovate.com' },
+  { id: 'audit_7', name: 'Employee Offboarding Process Review', status: 'Failed', groupId: 'group_2', organizationId: 'org_1', date: '2024-06-05', auditorId: 'user_4', findings: 'Audit found that 2 out of 15 terminated employees in Q2 still had active VPN accounts for more than 48 hours post-termination. This violates the internal policy on timely access revocation (Control AC-2).', processOwnerName: 'Human Resources', processOwnerEmail: 'hr@innovate.com' },
 ];
 
 let tickets: Ticket[] = [
-    { id: 'ticket_1', processId: 'audit_3', organizationId: 'org_1', title: 'Remediate SQL Injection Vulnerability', description: 'The main web application is vulnerable to SQL injection on the login page.', status: 'In Progress', priority: 'High', assigneeId: 'user_4', createdAt: '2024-05-02' },
-    { id: 'ticket_2', processId: 'audit_3', organizationId: 'org_1', title: 'Update Apache Server Version', description: 'Server is running an outdated version of Apache with known vulnerabilities.', status: 'Open', priority: 'Medium', assigneeId: 'user_4', createdAt: '2024-05-02' },
-    { id: 'ticket_3', processId: 'audit_1', organizationId: 'org_1', title: 'Review Firewall Rule #4815', description: 'Firewall rule #4815 seems overly permissive. Review and tighten if necessary.', status: 'Resolved', priority: 'Low', assigneeId: 'user_1', createdAt: '2024-03-16' },
+    { id: 'ticket_1', processId: 'audit_3', organizationId: 'org_1', title: 'Follow up with CoreWeave on Encryption Evidence', description: 'CoreWeave did not provide their latest SOC 2 report. Procurement to escalate and request evidence for control CC7.1 within 14 days.', status: 'In Progress', priority: 'High', assigneeId: 'user_1', createdAt: '2024-05-16' },
+    { id: 'ticket_2', processId: 'audit_3', organizationId: 'org_1', title: 'Define RTO in CoreWeave BCP/DR Plan', description: 'The Business Continuity Plan from CoreWeave is missing a clearly defined Recovery Time Objective. This needs to be addressed in the next contract renewal.', status: 'Open', priority: 'Medium', assigneeId: 'user_1', createdAt: '2024-05-16' },
+    { id: 'ticket_3', processId: 'audit_1', organizationId: 'org_1', title: 'Formalize Role Change Approval Process', description: 'IT needs to document and implement a formal approval workflow for any changes to user roles and permissions in Okta.', status: 'Resolved', priority: 'Low', assigneeId: 'user_4', createdAt: '2024-03-21' },
+    { id: 'ticket_4', processId: 'audit_7', organizationId: 'org_1', title: 'Automate VPN Access Revocation', description: 'The current manual offboarding process is prone to error. IT and HR to collaborate on a script to automatically disable VPN access upon employee termination flagged in the HRIS.', status: 'Open', priority: 'High', assigneeId: 'user_4', createdAt: '2024-06-06' },
 ];
 
 let files: ManagedFile[] = [
-    { id: 'file_1', name: 'SOC2_Report_Q1_2024.pdf', type: 'pdf', size: '2.5 MB', uploadedAt: '2024-03-20', auditId: 'audit_1', organizationId: 'org_1' },
-    { id: 'file_2', name: 'pentest_results.docx', type: 'docx', size: '800 KB', uploadedAt: '2024-05-02', auditId: 'audit_3', organizationId: 'org_1' },
-    { id: 'file_3', name: 'evidence_logs.xlsx', type: 'xlsx', size: '5.1 MB', uploadedAt: '2024-06-18', auditId: 'audit_2', organizationId: 'org_1' },
+    { id: 'file_1', name: 'Q1_User_Access_Review_Evidence.xlsx', type: 'xlsx', size: '1.8 MB', uploadedAt: '2024-03-19', auditId: 'audit_1', organizationId: 'org_1' },
+    { id: 'file_2', name: 'CoreWeave_SOC2_Report_2023.pdf', type: 'pdf', size: '3.2 MB', uploadedAt: '2024-05-10', auditId: 'audit_3', organizationId: 'org_1' },
+    { id: 'file_3', name: 'AWS_S3_Scan_Results.pdf', type: 'pdf', size: '950 KB', uploadedAt: '2024-06-24', auditId: 'audit_2', organizationId: 'org_1' },
+    { id: 'file_4', name: 'Offboarding_Checklist_Evidence.docx', type: 'docx', size: '450 KB', uploadedAt: '2024-06-04', auditId: 'audit_7', organizationId: 'org_1' },
 ];
 
 let templates: AuditTemplate[] = [
-    { id: 'template_1', name: 'Standard Web App Security Process', description: 'A template for auditing typical web applications.', organizationId: 'org_1', createdBy: 'user_1', createdAt: '2024-01-10', items: [
-        { id: 'item_1', text: 'Check for SQL injection vulnerabilities.' },
-        { id: 'item_2', text: 'Verify Cross-Site Scripting (XSS) protection.' },
-        { id: 'item_3', text: 'Ensure proper session management.' },
+    { id: 'template_1', name: 'Cloud Vendor Security Assessment', description: 'A standard template for assessing the security posture of cloud service providers.', organizationId: 'org_1', createdBy: 'user_1', createdAt: '2024-01-10', items: [
+        { id: 'item_1', text: 'Review vendor SOC 2 Type II report for relevant trust service criteria.' },
+        { id: 'item_2', text: 'Validate data encryption policies for data at rest and in transit.' },
+        { id: 'item_3', text: 'Assess vendor BCP/DR documentation and test results.' },
+        { id: 'item_4', text: 'Review vendor incident response plan.' },
     ]},
-    { id: 'template_2', name: 'ISO 27001 Compliance Checklist', description: 'Checklist for ISO 27001 information security standard.', organizationId: 'org_2', createdBy: 'user_5', createdAt: '2024-02-15', items: [
-        { id: 'item_1', text: 'Review Information Security Policy document.' },
-        { id: 'item_2', text: 'Assess asset management procedures.' },
-        { id: 'item_3', text: 'Verify access control mechanisms.' },
+    { id: 'template_2', name: 'Employee Onboarding/Offboarding', description: 'Checklist for ensuring secure employee lifecycle management.', organizationId: 'org_1', createdBy: 'user_4', createdAt: '2024-02-15', items: [
+        { id: 'item_1', text: 'Verify identity and complete background check before access is granted.' },
+        { id: 'item_2', text: 'Ensure principle of least privilege is applied to initial system access.' },
+        { id: 'item_3', text: 'Confirm all company assets are returned upon termination.' },
+        { id: 'item_4', text: 'Ensure all system access is revoked within 24 hours of termination.' },
     ]},
 ];
 
@@ -118,7 +125,7 @@ export const getTemplates = (): AuditTemplate[] => {
 
 export const getTicketsForProcess = (processId: string): Ticket[] => {
     const orgId = getCurrentOrganization().id;
-    return tickets.filter(t => t.processId === processId && t.organizationId === orgId);
+    return tickets.filter(t => t.processId === processId && t.organizationId === orgId).sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 }
 
 
