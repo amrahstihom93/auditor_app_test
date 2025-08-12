@@ -19,6 +19,7 @@ import {
   BookCopy,
   Settings,
   Shield,
+  Notebook,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -61,6 +62,17 @@ export default function DashboardLayout({
                 <Link href="/audits">
                   <FileText />
                   <span>Audits</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton
+                asChild
+                tooltip={{ children: "Notes", side: "right" }}
+              >
+                <Link href="/notes">
+                  <Notebook />
+                  <span>Notes</span>
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
