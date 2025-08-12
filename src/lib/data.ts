@@ -124,6 +124,25 @@ export const getTicketsForProcess = (processId: string): Ticket[] => {
 
 // --- DATA MUTATION FUNCTIONS ---
 
+export function updateUser(userId: string, data: Partial<Pick<User, 'name' | 'email'>>): User | undefined {
+    const userIndex = users.findIndex(u => u.id === userId);
+    if (userIndex > -1) {
+        users[userIndex] = { ...users[userIndex], ...data };
+        return users[userIndex];
+    }
+    return undefined;
+}
+
+export function updateOrganization(orgId: string, data: Partial<Pick<Organization, 'name'>>): Organization | undefined {
+     const orgIndex = organizations.findIndex(o => o.id === orgId);
+    if (orgIndex > -1) {
+        organizations[orgIndex] = { ...organizations[orgIndex], ...data };
+        return organizations[orgIndex];
+    }
+    return undefined;
+}
+
+
 export function addTicket(ticket: Omit<Ticket, 'id' | 'organizationId' | 'createdAt'>): Ticket {
     const newTicket: Ticket = {
         id: `ticket_${Date.now()}`,
