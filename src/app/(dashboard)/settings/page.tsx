@@ -3,10 +3,10 @@
 
 import { useState } from "react";
 import { PageHeader } from "@/components/shared/page-header";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { getCurrentUser, getCurrentOrganization, updateUser, updateOrganization } from "@/lib/data";
 import { SettingsForm, ProfileFormValues, OrgFormValues } from "@/components/settings/settings-form";
 import { useToast } from "@/hooks/use-toast";
+import { ThemeSettings } from "@/components/settings/theme-settings";
 
 export default function SettingsPage() {
   const [user, setUser] = useState(() => getCurrentUser());
@@ -54,15 +54,7 @@ export default function SettingsPage() {
             onSubmit={handleOrgUpdate}
           />
         )}
-         <Card>
-            <CardHeader>
-                <CardTitle>Appearance</CardTitle>
-                <CardDescription>Customize the look and feel of the application.</CardDescription>
-            </CardHeader>
-            <CardContent>
-                <p className="text-sm text-muted-foreground">Theme settings will be available here soon.</p>
-            </CardContent>
-        </Card>
+        <ThemeSettings />
       </div>
     </div>
   );
