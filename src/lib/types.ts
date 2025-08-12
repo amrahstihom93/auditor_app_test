@@ -17,18 +17,20 @@ export type User = {
   organizationId: string;
 };
 
-export type AuditStatus = "Passed" | "Failed" | "In Progress" | "Pending";
+export type ProcessStatus = "Passed" | "Failed" | "In Progress" | "Pending";
 
-export type Audit = {
+export type Process = {
   id: string;
   name: string;
-  status: AuditStatus;
+  status: ProcessStatus;
   groupId: string;
   organizationId: string;
   findings: string;
   summary?: string;
   date: string;
   auditorId: string;
+  processOwnerName: string;
+  processOwnerEmail: string;
 };
 
 export type Group = {

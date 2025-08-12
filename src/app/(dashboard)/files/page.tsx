@@ -23,7 +23,7 @@ import {
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from "@/components/ui/dialog";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { getFiles, getAudit, deleteFile, addFile } from "@/lib/data";
+import { getFiles, getProcess, deleteFile, addFile } from "@/lib/data";
 import type { ManagedFile } from "@/lib/types";
 import { FileUp, File, FileText, FileSpreadsheet, MoreHorizontal } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
@@ -69,7 +69,7 @@ export default function FilesPage() {
     <div>
       <PageHeader
         title="Files"
-        description="Manage all files related to your audits."
+        description="Manage all files related to your processes."
         actions={
            <Dialog open={isUploadDialogOpen} onOpenChange={setIsUploadDialogOpen}>
             <DialogTrigger asChild>
@@ -82,7 +82,7 @@ export default function FilesPage() {
                 <DialogHeader>
                     <DialogTitle>Upload a New File</DialogTitle>
                     <DialogDescription>
-                        Select a file and associate it with an audit.
+                        Select a file and associate it with a process.
                     </DialogDescription>
                 </DialogHeader>
                 <UploadFileForm onFileUploaded={handleFileUploaded} />
@@ -93,14 +93,14 @@ export default function FilesPage() {
       <Card>
         <CardHeader>
           <CardTitle>File Library</CardTitle>
-          <CardDescription>All files uploaded for audit evidence and reports.</CardDescription>
+          <CardDescription>All files uploaded for process evidence and reports.</CardDescription>
         </CardHeader>
         <CardContent>
           <Table>
             <TableHeader>
               <TableRow>
                 <TableHead>File Name</TableHead>
-                <TableHead>Related Audit</TableHead>
+                <TableHead>Related Process</TableHead>
                 <TableHead>Size</TableHead>
                 <TableHead>Uploaded At</TableHead>
                 <TableHead><span className="sr-only">Actions</span></TableHead>
@@ -108,7 +108,7 @@ export default function FilesPage() {
             </TableHeader>
             <TableBody>
               {fileList.map((file) => {
-                const audit = getAudit(file.auditId);
+                const process = getProcess(file.auditId);
                 return (
                   <TableRow key={file.id}>
                     <TableCell>
@@ -117,7 +117,7 @@ export default function FilesPage() {
                            <span className="font-medium">{file.name}</span>
                         </div>
                     </TableCell>
-                    <TableCell>{audit?.name}</TableCell>
+                    <TableCell>{process?.name}</TableCell>
                     <TableCell>{file.size}</TableCell>
                     <TableCell>{new Date(file.uploadedAt).toLocaleDateString()}</TableCell>
                     <TableCell>

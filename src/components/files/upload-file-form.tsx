@@ -21,12 +21,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { addFile, getAudits } from "@/lib/data";
+import { addFile, getProcesses } from "@/lib/data";
 import type { ManagedFile } from "@/lib/types";
 
 const formSchema = z.object({
   fileName: z.string().min(1, "File name is required."),
-  auditId: z.string({ required_error: "Please select an audit to link this file to."}),
+  auditId: z.string({ required_error: "Please select a process to link this file to."}),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -44,7 +44,7 @@ const getFileExtension = (fileName: string): "pdf" | "docx" | "xlsx" => {
 }
 
 export function UploadFileForm({ onFileUploaded }: UploadFileFormProps) {
-  const audits = getAudits();
+  const processes = getProcesses();
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -86,16 +86,16 @@ export function UploadFileForm({ onFileUploaded }: UploadFileFormProps) {
           name="auditId"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Link to Audit</FormLabel>
+              <FormLabel>Link to Process</FormLabel>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                     <FormControl>
                         <SelectTrigger>
-                            <SelectValue placeholder="Select an audit" />
+                            <SelectValue placeholder="Select a process" />
                         </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                        {audits.map(audit => (
-                            <SelectItem key={audit.id} value={audit.id}>{audit.name}</SelectItem>
+                        {processes.map(process => (
+                            <SelectItem key={process.id} value={process.id}>{process.name}</SelectItem>
                         ))}
                     </SelectContent>
                 </Select>

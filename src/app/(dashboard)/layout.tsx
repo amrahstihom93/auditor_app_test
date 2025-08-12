@@ -57,11 +57,11 @@ export default function DashboardLayout({
             <SidebarMenuItem>
               <SidebarMenuButton
                 asChild
-                tooltip={{ children: "Audits", side: "right" }}
+                tooltip={{ children: "Processes", side: "right" }}
               >
                 <Link href="/audits">
                   <FileText />
-                  <span>Audits</span>
+                  <span>Processes</span>
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>

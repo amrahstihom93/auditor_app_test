@@ -19,8 +19,8 @@ export default function TemplatesPage() {
   return (
     <div>
       <PageHeader
-        title="Audit Templates"
-        description="Create and manage reusable templates for your audits."
+        title="Process Templates"
+        description="Create and manage reusable templates for your processes."
         actions={
           <Button asChild>
             <Link href="/templates/new">

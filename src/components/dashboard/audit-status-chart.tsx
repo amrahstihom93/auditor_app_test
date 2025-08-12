@@ -3,10 +3,10 @@
 
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, Tooltip, Legend } from "recharts";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { getAudits, getGroups } from "@/lib/data";
-import type { AuditStatus } from "@/lib/types";
+import { getProcesses, getGroups } from "@/lib/data";
+import type { ProcessStatus } from "@/lib/types";
 
-const statusColors: Record<AuditStatus, string> = {
+const statusColors: Record<ProcessStatus, string> = {
   Passed: "hsl(var(--chart-2))",
   Failed: "hsl(var(--chart-3))",
   "In Progress": "hsl(var(--chart-4))",
@@ -14,14 +14,14 @@ const statusColors: Record<AuditStatus, string> = {
 };
 
 export function AuditStatusChart() {
-  const audits = getAudits();
+  const processes = getProcesses();
   const groups = getGroups();
   const data = groups.map(group => {
-    const groupAudits = audits.filter(audit => audit.groupId === group.id);
-    const statusCounts = groupAudits.reduce((acc, audit) => {
+    const groupProcesses = processes.filter(audit => audit.groupId === group.id);
+    const statusCounts = groupProcesses.reduce((acc, audit) => {
       acc[audit.status] = (acc[audit.status] || 0) + 1;
       return acc;
-    }, {} as Record<AuditStatus, number>);
+    }, {} as Record<ProcessStatus, number>);
     
     return {
       name: group.name,
@@ -32,8 +32,8 @@ export function AuditStatusChart() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Audit Status by Group</CardTitle>
-        <CardDescription>A summary of audit outcomes for each group.</CardDescription>
+        <CardTitle>Process Status by Group</CardTitle>
+        <CardDescription>A summary of process outcomes for each group.</CardDescription>
       </CardHeader>
       <CardContent>
         <ResponsiveContainer width="100%" height={300}>

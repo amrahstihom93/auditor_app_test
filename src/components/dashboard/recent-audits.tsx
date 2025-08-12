@@ -13,12 +13,12 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
-import { getAudits, getUsers } from "@/lib/data";
+import { getProcesses, getUsers } from "@/lib/data";
 import { Badge } from "../ui/badge";
 import { cn } from "@/lib/utils";
-import type { AuditStatus } from "@/lib/types";
+import type { ProcessStatus } from "@/lib/types";
 
-const getStatusVariant = (status: AuditStatus) => {
+const getStatusVariant = (status: ProcessStatus) => {
     switch (status) {
         case 'Passed':
             return 'default'; // This will be green due to accent color mapping
@@ -31,39 +31,39 @@ const getStatusVariant = (status: AuditStatus) => {
 }
 
 export function RecentAudits() {
-  const audits = getAudits();
+  const processes = getProcesses();
   const users = getUsers();
-  const recentAudits = audits.slice(0, 5);
+  const recentProcesses = processes.slice(0, 5);
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Recent Audits</CardTitle>
+        <CardTitle>Recent Processes</CardTitle>
         <CardDescription>
-          The most recently updated audits in your organization.
+          The most recently updated processes in your organization.
         </CardDescription>
       </CardHeader>
       <CardContent>
         <div className="space-y-6">
-          {recentAudits.map((audit) => {
-            const user = users.find((u) => u.id === audit.auditorId);
+          {recentProcesses.map((process) => {
+            const user = users.find((u) => u.id === process.auditorId);
             return (
-              <div key={audit.id} className="flex items-center">
+              <div key={process.id} className="flex items-center">
                 <Avatar className="h-9 w-9">
                   <AvatarImage src={user?.avatar} alt="Avatar" data-ai-hint="person avatar" />
                   <AvatarFallback>{user?.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
                 </Avatar>
                 <div className="ml-4 space-y-1">
                   <p className="text-sm font-medium leading-none">
-                    {audit.name}
+                    {process.name}
                   </p>
                   <p className="text-sm text-muted-foreground">
                     by {user?.name}
                   </p>
                 </div>
                 <div className="ml-auto font-medium">
-                <Badge variant={getStatusVariant(audit.status)} className={cn(audit.status === 'Passed' && 'bg-accent text-accent-foreground', 'capitalize')}>
-                    {audit.status}
+                <Badge variant={getStatusVariant(process.status)} className={cn(process.status === 'Passed' && 'bg-accent text-accent-foreground', 'capitalize')}>
+                    {process.status}
                 </Badge>
                 </div>
               </div>

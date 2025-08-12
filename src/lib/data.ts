@@ -1,5 +1,5 @@
 
-import type { Organization, User, Audit, Group, ManagedFile, AuditTemplate, UserStatus } from './types';
+import type { Organization, User, Process, Group, ManagedFile, AuditTemplate, UserStatus } from './types';
 
 // In-memory data store
 let organizations: Organization[] = [
@@ -17,18 +17,18 @@ let users: User[] = [
 ];
 
 let groups: Group[] = [
-    { id: 'group_1', name: 'SOC 2 Compliance', description: 'Audits related to SOC 2 Type II certification.', organizationId: 'org_1' },
+    { id: 'group_1', name: 'SOC 2 Compliance', description: 'Processes related to SOC 2 Type II certification.', organizationId: 'org_1' },
     { id: 'group_2', name: 'Internal Security', description: 'Regular internal security assessments.', organizationId: 'org_1' },
-    { id: 'group_3', name: 'Financial Systems', description: 'Audits for financial system integrity.', organizationId: 'org_2' },
+    { id: 'group_3', name: 'Financial Systems', description: 'Processes for financial system integrity.', organizationId: 'org_2' },
 ];
 
-let audits: Audit[] = [
-  { id: 'audit_1', name: 'Q1 2024 SOC 2 Audit', status: 'Passed', groupId: 'group_1', organizationId: 'org_1', date: '2024-03-15', auditorId: 'user_4', findings: 'All controls were met. No exceptions noted. Strong encryption and access control mechanisms are in place. Recommend continuous monitoring of firewall rules.' },
-  { id: 'audit_2', name: 'Q2 2024 SOC 2 Audit', status: 'In Progress', groupId: 'group_1', organizationId: 'org_1', date: '2024-06-20', auditorId: 'user_4', findings: 'Audit is currently underway. Initial review of access logs shows no anomalies.' },
-  { id: 'audit_3', name: 'Penetration Test', status: 'Failed', groupId: 'group_2', organizationId: 'org_1', date: '2024-05-01', auditorId: 'user_4', findings: 'Critical vulnerability found in the main web application (SQL Injection). Several medium-risk vulnerabilities related to outdated server software were also identified. Immediate remediation is required.' },
-  { id: 'audit_4', name: 'Payment Gateway Audit', status: 'Passed', groupId: 'group_3', organizationId: 'org_2', date: '2024-04-10', auditorId: 'user_2', findings: 'Transaction processing is secure and compliant with PCI DSS standards.' },
-  { id: 'audit_5', name: 'HR System Access Control', status: 'Pending', groupId: 'group_3', organizationId: 'org_2', date: '2024-07-05', auditorId: 'user_2', findings: '' },
-  { id: 'audit_6', name: 'Data Center Physical Security', status: 'Passed', groupId: 'group_2', organizationId: 'org_1', date: '2024-02-28', auditorId: 'user_4', findings: 'Physical access controls are robust. Biometric scanners and surveillance systems are fully operational.' },
+let processes: Process[] = [
+  { id: 'audit_1', name: 'Q1 2024 SOC 2', status: 'Passed', groupId: 'group_1', organizationId: 'org_1', date: '2024-03-15', auditorId: 'user_4', findings: 'All controls were met. No exceptions noted. Strong encryption and access control mechanisms are in place. Recommend continuous monitoring of firewall rules.', processOwnerName: 'Product Team', processOwnerEmail: 'product@innovate.com' },
+  { id: 'audit_2', name: 'Q2 2024 SOC 2', status: 'In Progress', groupId: 'group_1', organizationId: 'org_1', date: '2024-06-20', auditorId: 'user_4', findings: 'Process is currently underway. Initial review of access logs shows no anomalies.', processOwnerName: 'Product Team', processOwnerEmail: 'product@innovate.com' },
+  { id: 'audit_3', name: 'Penetration Test', status: 'Failed', groupId: 'group_2', organizationId: 'org_1', date: '2024-05-01', auditorId: 'user_4', findings: 'Critical vulnerability found in the main web application (SQL Injection). Several medium-risk vulnerabilities related to outdated server software were also identified. Immediate remediation is required.', processOwnerName: 'Engineering Team', processOwnerEmail: 'eng@innovate.com' },
+  { id: 'audit_4', name: 'Payment Gateway Audit', status: 'Passed', groupId: 'group_3', organizationId: 'org_2', date: '2024-04-10', auditorId: 'user_2', findings: 'Transaction processing is secure and compliant with PCI DSS standards.', processOwnerName: 'Finance Dept', processOwnerEmail: 'finance@securesoft.com' },
+  { id: 'audit_5', name: 'HR System Access Control', status: 'Pending', groupId: 'group_3', organizationId: 'org_2', date: '2024-07-05', auditorId: 'user_2', findings: '', processOwnerName: 'HR Team', processOwnerEmail: 'hr@securesoft.com' },
+  { id: 'audit_6', name: 'Data Center Physical Security', status: 'Passed', groupId: 'group_2', organizationId: 'org_1', date: '2024-02-28', auditorId: 'user_4', findings: 'Physical access controls are robust. Biometric scanners and surveillance systems are fully operational.', processOwnerName: 'IT Operations', processOwnerEmail: 'itops@innovate.com' },
 ];
 
 let files: ManagedFile[] = [
@@ -38,7 +38,7 @@ let files: ManagedFile[] = [
 ];
 
 let templates: AuditTemplate[] = [
-    { id: 'template_1', name: 'Standard Web App Security Audit', description: 'A template for auditing typical web applications.', organizationId: 'org_1', createdBy: 'user_1', createdAt: '2024-01-10', items: [
+    { id: 'template_1', name: 'Standard Web App Security Process', description: 'A template for auditing typical web applications.', organizationId: 'org_1', createdBy: 'user_1', createdAt: '2024-01-10', items: [
         { id: 'item_1', text: 'Check for SQL injection vulnerabilities.' },
         { id: 'item_2', text: 'Verify Cross-Site Scripting (XSS) protection.' },
         { id: 'item_3', text: 'Ensure proper session management.' },
@@ -50,7 +50,6 @@ let templates: AuditTemplate[] = [
     ]},
 ];
 
-// For demo purposes, we'll hardcode the current user and organization
 // In a real app, this would be determined by the authentication state.
 let currentUserId = 'user_1';
 let currentOrganizationId = 'org_1';
@@ -81,14 +80,14 @@ export const getUser = (id: string): User | undefined => {
     return users.find(u => u.id === id && u.organizationId === orgId);
 }
 
-export const getAudits = (): Audit[] => {
+export const getProcesses = (): Process[] => {
     const orgId = getCurrentOrganization().id;
-    return audits.filter(a => a.organizationId === orgId);
+    return processes.filter(a => a.organizationId === orgId);
 };
 
-export const getAudit = (id: string): Audit | undefined => {
+export const getProcess = (id: string): Process | undefined => {
     const orgId = getCurrentOrganization().id;
-    return audits.find(a => a.id === id && a.organizationId === orgId);
+    return processes.find(a => a.id === id && a.organizationId === orgId);
 }
 
 export const getGroups = (): Group[] => {
