@@ -119,7 +119,7 @@ export default function FilesPage() {
                     </TableCell>
                     <TableCell>{process?.name}</TableCell>
                     <TableCell>{file.size}</TableCell>
-                    <TableCell>{new Date(file.uploadedAt).toLocaleDateString()}</TableCell>
+                    <TableCell>{new Date(file.uploadedAt).toLocaleDateString('en-CA')}</TableCell>
                     <TableCell>
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>

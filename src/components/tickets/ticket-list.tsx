@@ -116,7 +116,7 @@ export function TicketList({ tickets, users }: TicketListProps) {
                                     )}
                                 </TableCell>
                                  <TableCell>
-                                    {new Date(ticket.createdAt).toLocaleDateString()}
+                                    {new Date(ticket.createdAt).toLocaleDateString('en-CA')}
                                 </TableCell>
                             </TableRow>
                         )

@@ -78,7 +78,7 @@ export default function ProcessesPage() {
                     </TableCell>
                     <TableCell>{process.processOwnerName}</TableCell>
                     <TableCell>{auditor?.name}</TableCell>
-                    <TableCell>{new Date(process.date).toLocaleDateString()}</TableCell>
+                    <TableCell>{new Date(process.date).toLocaleDateString('en-CA')}</TableCell>
                     <TableCell>
                       <Button asChild variant="ghost" size="sm">
                         <Link href={`/audits/${process.id}`}>View</Link>

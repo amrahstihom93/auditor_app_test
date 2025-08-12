@@ -22,7 +22,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { addTicket } from "@/lib/data";
-import type { User, Ticket, TicketPriority, TicketStatus } from "@/lib/types";
+import type { User, Ticket } from "@/lib/types";
 
 const formSchema = z.object({
   title: z.string().min(1, "Title is required."),

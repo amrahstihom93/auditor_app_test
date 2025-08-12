@@ -38,7 +38,7 @@ export default function TemplatesPage() {
                     <CardHeader>
                         <CardTitle>{template.name}</CardTitle>
                         <CardDescription>{template.description}</CardDescription>
-                        <p className="text-xs text-muted-foreground">Created by {creator?.name} on {new Date(template.createdAt).toLocaleDateString()}</p>
+                        <p className="text-xs text-muted-foreground">Created by {creator?.name} on {new Date(template.createdAt).toLocaleDateString('en-CA')}</p>
                     </CardHeader>
                     <CardContent>
                         <Accordion type="single" collapsible>

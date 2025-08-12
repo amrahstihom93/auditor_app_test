@@ -58,7 +58,7 @@ export default function ProcessDetailPage({ params }: { params: { id: string } }
     <div>
       <PageHeader
         title={process.name}
-        description={`Details for process conducted on ${new Date(process.date).toLocaleDateString()}.`}
+        description={`Details for process conducted on ${new Date(process.date).toLocaleDateString('en-CA')}.`}
       />
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         <Card>
@@ -90,7 +90,7 @@ export default function ProcessDetailPage({ params }: { params: { id: string } }
             </div>
             <div className="flex justify-between">
               <span className="text-muted-foreground">Date</span>
-              <span>{new Date(process.date).toLocaleDateString()}</span>
+              <span>{new Date(process.date).toLocaleDateString('en-CA')}</span>
             </div>
           </CardContent>
         </Card>
